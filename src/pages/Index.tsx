@@ -5,6 +5,7 @@ import LandingPage from '@/components/LandingPage';
 import StudentDashboard from '@/components/StudentDashboard';
 import ProfessorDashboard from '@/components/ProfessorDashboard';
 import TPODashboard from '@/components/TPODashboard';
+import HODDashboard from '@/components/HODDashboard';
 
 const Index = () => {
   const [user, setUser] = useState<{
@@ -42,8 +43,9 @@ const Index = () => {
       case 'professor':
         return <ProfessorDashboard />;
       case 'tpo':
-      case 'hod':
         return <TPODashboard />;
+      case 'hod':
+        return <HODDashboard />;
       default:
         return <StudentDashboard />;
     }
