@@ -1,12 +1,58 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import Header from '@/components/Header';
+import LandingPage from '@/components/LandingPage';
+import StudentDashboard from '@/components/StudentDashboard';
+import ProfessorDashboard from '@/components/ProfessorDashboard';
+import TPODashboard from '@/components/TPODashboard';
 
 const Index = () => {
+  const [user, setUser] = useState<{
+    name: string;
+    email: string;
+    role: string;
+  } | null>(null);
+
+  const handleLogin = (credentials: { email: string; password: string; role: string }) => {
+    // Simulate login - in real app, this would make API call
+    const userNames = {
+      student: 'John Doe',
+      professor: 'Dr. Sarah Johnson',
+      tpo: 'Michael Smith',
+      hod: 'Dr. Priya Sharma'
+    };
+    
+    setUser({
+      name: userNames[credentials.role as keyof typeof userNames],
+      email: credentials.email,
+      role: credentials.role.toUpperCase()
+    });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
+  const renderDashboard = () => {
+    if (!user) return null;
+    
+    switch (user.role.toLowerCase()) {
+      case 'student':
+        return <StudentDashboard />;
+      case 'professor':
+        return <ProfessorDashboard />;
+      case 'tpo':
+      case 'hod':
+        return <TPODashboard />;
+      default:
+        return <StudentDashboard />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <Header user={user} onLogout={handleLogout} />
+      {user ? renderDashboard() : <LandingPage onLogin={handleLogin} />}
     </div>
   );
 };
