@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,8 +10,39 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Upload, Clock, CheckCircle, User, Mail, Phone } from 'lucide-react';
 
+interface PersonalDetails {
+  fullName: string;
+  email: string;
+  phone: string;
+  studentId: string;
+  department: string;
+  year: string;
+  cgpa: string;
+}
+
+interface AcademicDetails {
+  course: string;
+  semester: string;
+  specialization: string;
+  targetUniversity: string;
+  programType: string;
+}
+
+interface Documents {
+  resume: File | null;
+  sop: File | null;
+  transcripts: File | null;
+}
+
+interface RequestForm {
+  personalDetails: PersonalDetails;
+  academicDetails: AcademicDetails;
+  professorSelection: string;
+  documents: Documents;
+}
+
 const StudentDashboard = () => {
-  const [requestForm, setRequestForm] = useState({
+  const [requestForm, setRequestForm] = useState<RequestForm>({
     personalDetails: {
       fullName: '',
       email: '',
@@ -68,17 +98,35 @@ const StudentDashboard = () => {
     }
   ]);
 
-  const handleInputChange = (section: string, field: string, value: any) => {
-    setRequestForm(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section as keyof typeof prev],
-        [field]: value
+  const handleInputChange = (section: keyof RequestForm, field: string, value: any) => {
+    setRequestForm(prev => {
+      if (section === 'personalDetails') {
+        return {
+          ...prev,
+          personalDetails: {
+            ...prev.personalDetails,
+            [field]: value
+          }
+        };
+      } else if (section === 'academicDetails') {
+        return {
+          ...prev,
+          academicDetails: {
+            ...prev.academicDetails,
+            [field]: value
+          }
+        };
+      } else if (section === 'professorSelection') {
+        return {
+          ...prev,
+          professorSelection: value
+        };
       }
-    }));
+      return prev;
+    });
   };
 
-  const handleFileUpload = (field: string, file: File | null) => {
+  const handleFileUpload = (field: keyof Documents, file: File | null) => {
     setRequestForm(prev => ({
       ...prev,
       documents: {
@@ -292,7 +340,7 @@ const StudentDashboard = () => {
               {/* Professor Selection */}
               <div>
                 <h3 className="text-lg font-semibold mb-4">Professor Selection</h3>
-                <Select onValueChange={(value) => setRequestForm({...requestForm, professorSelection: value})}>
+                <Select onValueChange={(value) => handleInputChange('professorSelection', '', value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select preferred professor" />
                   </SelectTrigger>
