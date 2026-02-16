@@ -3,7 +3,7 @@ import React from "react";
 const Index = () => {
   return (
     <div style={{ padding: "40px", textAlign: "center" }}>
-      <h1>Academic Recommendation Portal - Feature Login Added</h1>
+      <h1>Academic Recommendation Portal - Faculty Panel</h1>
       <p>
         Welcome to the Academic Recommendation Portal.
       </p>
