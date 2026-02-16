@@ -1,5 +1,6 @@
 # Welcome to your Lovable project
-THIS PROJECT IS BEING USED FOR DEVOPS LAB EXPERIMENT 4 
+THIS PROJECT IS BEING USED FOR DEVOPS LAB EXPERIMENT 4
+Updated README for DevOps Experiment 4 
 ## Project info
 
 **URL**: https://lovable.dev/projects/2bbb2f52-dc80-4ec8-918c-36ccfb486268
